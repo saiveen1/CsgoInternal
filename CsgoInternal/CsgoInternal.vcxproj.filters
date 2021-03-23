@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Hacks">
+      <UniqueIdentifier>{3061aebc-efd1-4606-b233-01b015eb8580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D9">
+      <UniqueIdentifier>{2c059a45-ba71-4802-98ef-0cf2f2264ca8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Aimbot.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ESP.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="hack.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dx9.h">
+      <Filter>D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Hook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="render.h">
+      <Filter>D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Aimbot.cpp">
+      <Filter>Hacks</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ESP.cpp">
+      <Filter>Hacks</Filter>
+    </ClCompile>
+    <ClCompile Include="hack.cpp">
+      <Filter>Hacks</Filter>
+    </ClCompile>
+    <ClCompile Include="math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dx9.cpp">
+      <Filter>D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="Hook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc.cpp">
+      <Filter>Hacks</Filter>
+    </ClCompile>
+    <ClCompile Include="render.cpp">
+      <Filter>D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Hacks</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
