@@ -89,11 +89,6 @@ LPSTR Utils::W2C(LPCWSTR szStr)
 	return pResult;
 }
 
-FLOAT Utils::GetDistance(Vec2 src, Vec2 dst)
-{
-	return sqrtf((src.x - dst.x) * (src.x - dst.x) + (src.y - dst.y) * (src.y - dst.y));
-}
-
 PIMAGE_NT_HEADERS Utils::GetNtHeaders(LPVOID pBuffer)
 {
 	return (PIMAGE_NT_HEADERS)((UINT_PTR)pBuffer + *((UINT_PTR*)((UINT_PTR)(pBuffer)+0x3c)));

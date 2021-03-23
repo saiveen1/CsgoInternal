@@ -8,6 +8,7 @@
 #include "dx9.h"
 #define PI 3.1415926
 #define ANGLE(rad) (FLOAT)(180 / PI * rad)
+#define W2S(w,s) Math::WorldToScreen(w,s)
 
 struct Vec2 {
 	FLOAT x, y;
@@ -46,6 +47,11 @@ struct Vec3 {
 	}
 	Vec3 operator/(FLOAT d) {
 		return { x / d, y / d, z / d };
+	}
+	VOID operator-=(Vec3 d) {
+		x -= d.x;
+		y -= d.y;
+		z -= d.z;
 	}
 
 	//Ω«∂»”√
@@ -87,6 +93,7 @@ struct Rect {
 
 namespace Math
 {
-	BOOL WorldToScreen(Vec3 pos, Vec2& screen);
+	BOOL WorldToScreen(Vec3 pos, Vec2* screen);
+	FLOAT GetDistance2D(Vec2 src, Vec2 dst);
 }
 

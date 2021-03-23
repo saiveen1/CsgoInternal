@@ -4,7 +4,7 @@
 Render::Render()
 {
 	D3DXCreateLine(pDevice, &LineL);
-	D3DXCreateFont(pDevice, 16, 0, FW_NORMAL, 1, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Arial", &FontF);
+	D3DXCreateFont(pDevice, 20, 0, FW_NORMAL, 1, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Arial", &FontF);
 }
 
 Render::~Render()
@@ -23,7 +23,6 @@ VOID Render::DrawLine(FLOAT x1, FLOAT y1, FLOAT x2, FLOAT y2, FLOAT thickness, D
 	LineL->Begin();
 	LineL->Draw(Line, 2, color);
 	LineL->End();
-	//释放在析构函数
 }
 
 VOID Render::DrawLine(Vec2 src, Vec2 dst, FLOAT thickness, D3DCOLOR color)
@@ -69,6 +68,7 @@ VOID Render::DrawRectWithFilledCol(Rect box, Rect fill, FLOAT lineThickness, D3D
 	DrawFilledRect(fill, filledColor);
 }
 
+//半径的三分之一正好
 VOID Render::DrawCircle(Vec2 center, FLOAT radius, UINT sides, FLOAT width, D3DCOLOR color)
 {
 	auto angle = D3DX_PI * 2 / sides;

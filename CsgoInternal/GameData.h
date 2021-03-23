@@ -14,12 +14,15 @@ struct EntData {
 	UINT vecOrigin;
 	UINT boneMatrix;
 	UINT bonePointInfo;
+	UINT shitBonePointOffset;
+	UINT spottedMask;
+	UINT shotsFired;
 };
 
 extern FLOAT viewProjecitonMatrix[16];
 extern EntData playerData;
-extern CEnt* localEnt;
-//还有个clientData在后面
+
+//还有localEnt和clientData在后面
 
 class CEntInfo
 {
@@ -61,19 +64,20 @@ class CEnt {
 private:
 public:
 
-	BOOL isValidEnt();
-
 	inline BYTE isDormant();
 	inline INT getTeam();
 	inline INT getHealth();
 	inline INT getFlags();
 	inline FLOAT getEyePosDelta();
 	inline Vec3 getViewAngles();
-	inline Vec3 getAimPunchAngles();
+	inline Vec3 getAimPunchAngle();
 	inline Vec3 getVecOrigin();
 	inline INT getBoneMatrix();
 	inline INT getBonePointInfo();
+	inline BOOL getSpottedMask();
+	inline INT getShotsFired();
 };
+extern CEnt* g_localEnt;
 
 BYTE CEnt::isDormant() {
 	return *(BYTE*)((UINT_PTR)this + playerData.dormant);
@@ -93,7 +97,7 @@ FLOAT CEnt::getEyePosDelta() {
 Vec3 CEnt::getViewAngles() {
 	return *(Vec3*)((UINT_PTR)this + playerData.viewAngles);
 }
-Vec3 CEnt::getAimPunchAngles() {
+Vec3 CEnt::getAimPunchAngle() {
 	return *(Vec3*)((UINT_PTR)this + playerData.aimPunchAngles);
 }
 Vec3 CEnt::getVecOrigin() {
@@ -105,6 +109,23 @@ INT CEnt::getBoneMatrix() {
 INT CEnt::getBonePointInfo() {
 	return *(INT*)((UINT_PTR)this + playerData.bonePointInfo);
 }
+BOOL CEnt::getSpottedMask() {
+	return *(INT*)((UINT_PTR)this + playerData.spottedMask);
+}
+INT CEnt::getShotsFired() {
+	return *(INT*)((UINT_PTR)this + playerData.shotsFired);
+}
 
 
+namespace GameData 
+{
+	BOOL isValidEnt(CEnt* ent);
+	Vec3 GetBonePos3D(CEnt* ent, UINT bone);
+	Vec3 GetHeadPos(CEnt* ent);
+	std::vector<UINT> GetBonePoints(CEnt* ent);
+	Vec3 GetLocalViewAngles();
+	VOID SetLocalViewAnlges(Vec3 newAngles);
+	Vec3 GetAimAnlges(Vec3 src);
+	FLOAT GetDistFromCrosshair(Vec2 src);
+}
 

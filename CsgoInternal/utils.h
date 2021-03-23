@@ -42,8 +42,6 @@ namespace Utils
 	//将宽字节wchar_t*转化为单字节char*  
 	LPSTR W2C(LPCWSTR szStr);
 
-	FLOAT GetDistance(Vec2 src, Vec2 dst);
-
 	PIMAGE_NT_HEADERS GetNtHeaders(LPVOID pBuffer);
 
 	PIMAGE_SECTION_HEADER GetSectionHeader(LPVOID pModule);

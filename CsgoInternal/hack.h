@@ -18,13 +18,13 @@ private:
 	LPVOID engineDLL;
 	CBaseEntityList* entList;
 
+
 	VOID getPlayers();
 public:
 	std::vector<CEnt*> players;
 
 	Hack();
 
-	VOID Init();
 	VOID Dump();
 	VOID Run();
 	VOID Update();
