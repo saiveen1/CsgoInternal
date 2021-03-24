@@ -50,8 +50,8 @@ public:
 	}buttons;
 
 	struct Colors {
-		D3DCOLOR optionEnable = D3DCOLOR_ARGB(255, 0, 0, 255);
-		D3DCOLOR optionDisable = D3DCOLOR_ARGB(255, 255, 255, 255);
+		D3DCOLOR optionEnable = D3DCOLOR_ARGB(255, 255, 255, 0);
+		D3DCOLOR optionDisable = D3DCOLOR_ARGB(255, 0, 255, 255);
 		D3DCOLOR crosshair = D3DCOLOR_ARGB(255, 0, 255, 0);
 		D3DCOLOR healthRect = D3DCOLOR_ARGB(255, 255, 255, 0);
 		struct Team {

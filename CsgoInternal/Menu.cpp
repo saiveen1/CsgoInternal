@@ -4,7 +4,7 @@
 #include "render.h"
 
 #include <atlstr.h>
-Vec2 menuPos{ 88,66 };
+Vec2 menuPos{ 100,66 };
 
 VOID Menu::RenderMenu()
 {
@@ -23,7 +23,8 @@ VOID Menu::RenderMenu()
 		render->DrawText(L"-----------------------", menuPos + 128, D3DCOLOR_ARGB(255, 255, 255, 255));
 		render->DrawText(L"Ctrl+0 FixedCrosshair", menuPos + 144, menu->settings.fixedCrosshair ? menu->color.optionEnable : menu->color.optionDisable);
 		render->DrawText(L"Ctrl+9 ShowAimbotRange", menuPos + 160, menu->settings.showAimbotRange ? menu->color.optionEnable : menu->color.optionDisable);
-		render->DrawText(L"End Quit", menuPos + 176, menu->color.optionDisable);
+		render->DrawText(L"¡ü¡ýRange¡û¡úSpeed", menuPos + 176, menu->settings.showAimbotRange ? menu->color.optionEnable : menu->color.optionDisable);
+		render->DrawText(L"End Quit", menuPos + 192, menu->color.optionDisable);
 	}
 }
 
