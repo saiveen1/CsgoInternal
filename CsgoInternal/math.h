@@ -17,9 +17,16 @@ struct Vec2 {
 	Vec2 operator+(FLOAT d) {
 		return{ x, y + d };
 	}
-
 	Vec2 operator-(Vec2 d) {
 		return { abs(x - d.x), abs(y - d.y) };
+	}
+	VOID operator-=(FLOAT d) {
+		x -= d;
+		y -= d;
+	}
+	VOID operator+=(FLOAT d) {
+		x += d;
+		y += d;
 	}
 
 	auto distFromCross() {

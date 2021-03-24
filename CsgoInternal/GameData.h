@@ -17,6 +17,7 @@ struct EntData {
 	UINT shitBonePointOffset;
 	UINT spottedMask;
 	UINT shotsFired;
+	UINT scoped;
 };
 
 extern FLOAT viewProjecitonMatrix[16];
@@ -76,6 +77,7 @@ public:
 	inline INT getBonePointInfo();
 	inline BOOL getSpottedMask();
 	inline INT getShotsFired();
+	inline BOOL isScoped();
 };
 extern CEnt* g_localEnt;
 
@@ -115,7 +117,9 @@ BOOL CEnt::getSpottedMask() {
 INT CEnt::getShotsFired() {
 	return *(INT*)((UINT_PTR)this + playerData.shotsFired);
 }
-
+BOOL CEnt::isScoped() {
+	return *(BOOL*)((UINT_PTR)this + playerData.scoped);
+}
 
 namespace GameData 
 {
@@ -127,5 +131,6 @@ namespace GameData
 	VOID SetLocalViewAnlges(Vec3 newAngles);
 	Vec3 GetAimAnlges(Vec3 src);
 	FLOAT GetDistFromCrosshair(Vec2 src);
+	Vec2 GetRecoilCrosshair2D();
 }
 

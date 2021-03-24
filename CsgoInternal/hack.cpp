@@ -39,21 +39,20 @@ DWORD WINAPI HackThread(HMODULE hModule)
 		{
 			hack->Update();
 		}
-	}
 
+		Sleep(1000);
+		Hook::Patch(d3d9Device[42], EndSceneBytes, 7);
+
+		Utils::DetachConsole();
+		::FreeLibraryAndExitThread(hModule, 0);
+	}
 	catch (const std::exception& e)
 	{
 		Utils::ConsolePrint("%s\n", e.what());
+		MessageBox(0, Utils::C2W(e.what()), L"Error", 0);
 		Utils::DetachConsole();
 		FreeLibraryAndExitThread(hModule, 1);
 	}
-
-	Sleep(1000);
-	Hook::Patch(d3d9Device[42], EndSceneBytes, 7);
-
-	Utils::DetachConsole();
-	::FreeLibraryAndExitThread(hModule, 0);
-
 }
 
 VOID APIENTRY HookEndScene(LPDIRECT3DDEVICE9 oldPDevice)
@@ -107,7 +106,7 @@ VOID Hack::Dump()
 	auto matrixOffset = *(UINT*)(Utils::PatternScan(clientDLL, "8D 45 80 8D 8F ?? ?? ?? ?? 50 E8") + 5);
 	clientData.vpMatrix = (FLOAT*)((UINT)clientInfo + (UINT)matrixOffset);
 
-	playerData.dormant = *(UINT*)(Utils::PatternScan(clientDLL, "8B 5D 08 56 8B F1 88 9E ?? ?? ?? ??") + 8);
+	playerData.dormant = *(UINT*)(Utils::PatternScan(clientDLL, "88 9E ?? ?? ?? ?? E8 ?? ?? ?? ?? 53") + 2);
 	playerData.health = *(UINT*)(Utils::PatternScan(clientDLL, "83 B9 ?? ?? ?? ?? 00 7F 2D 8B 01") + 2);
 	playerData.teamNum = *(UINT*)(Utils::PatternScan(clientDLL, "CC 8B 89 ?? ?? ?? ?? E9 ?? ?? ?? ?? CC") + 3);
 	playerData.vecOrigin = *(UINT*)(Utils::PatternScan(clientDLL, "0A C8 88 0E F3 0F 10 87 ?? ?? ?? ??") + 8);
@@ -119,10 +118,14 @@ VOID Hack::Dump()
 	playerData.shitBonePointOffset = *(UINT*)(Utils::PatternScan(clientDLL, "8B 00 8B 88 ?? ?? ?? ?? 03 C8 89 4D E0") + 4);
 	playerData.spottedMask = *(UINT*)(Utils::PatternScan(clientDLL, "85 84 96 ?? ?? ?? ?? 0F 95 44 24 0B") + 3);
 	playerData.shotsFired = *(UINT*)(Utils::PatternScan(clientDLL, "3B C2 74 06 89 91 ?? ?? ?? ??") + 6);
+	playerData.scoped = *(UINT*)(Utils::PatternScan(clientDLL, "74 07 C6 87 ?? ?? ?? ?? 01 8B 07 8B CF") + 4);
 }
 
 VOID Hack::Run()
 {
+	//在进入游戏前开启了辅助
+	if(!clientData.pLocal)
+		g_localEnt = clientData.pLocal = **(CEnt***)(Utils::PatternScan(clientDLL, "8B 35 ?? ?? ?? ?? 57 85 F6 74 56") + 2);
 	getPlayers();
 	menu->RenderMenu();
 	Misc::run();

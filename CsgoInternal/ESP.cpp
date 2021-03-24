@@ -128,25 +128,25 @@ static VOID TopFixedHealthBar(CEnt* ent,Vec2 headPos2D)
 	Rect filledRect = rect;
 	filledRect.width = updateWidth;
 	filledRect += 2; //¼õ2¸öÏñËØ²»¸²¸Ç¿ò
-	render->DrawRectWithFilledCol(rect, filledRect, 0.6f, menu->color.enemy.healthBar, menu->color.healthRect);
+	render->DrawRectWithFilledCol(rect, filledRect, 0.6f, menu->color.enemy.healthRect, menu->color.healthBar);
 }
 
 static VOID TopDymaicHealthBar(CEnt* ent, Vec2 basePos2D,Vec2 headPos2D)
 {
 	FLOAT height = abs(headPos2D.y - basePos2D.y);
 	FLOAT width = height / 2.f;
-	height = width / 3.f;
+	height = width / (FLOAT)2.5;
 	FLOAT topLX = headPos2D.x - width / 2.f;
 	FLOAT topLY = headPos2D.y - height / 2.f;
 
-	Rect rect = { topLX, topLY, width, height / 2 };
+	Rect rect = { topLX, topLY, width, height / 2.f };
 
 	FLOAT healthPerc = ent->getHealth() / 100.f;
 	FLOAT updateWidth = width * healthPerc;
 	Rect filledRect = rect;
 	filledRect.width = updateWidth;
 	filledRect += 1; //¼õ1¸öÏñËØ²»¸²¸Ç¿ò
-	render->DrawRectWithFilledCol(rect, filledRect, 0.6f, menu->color.enemy.healthBar, menu->color.healthRect);
+	render->DrawRectWithFilledCol(rect, filledRect, 1.f, BLACK, menu->color.healthBar);
 }
 
 static VOID LeftHealthBar(CEnt* ent, Vec2 basePos2D, Vec2 headPos2D)
@@ -161,7 +161,7 @@ static VOID LeftHealthBar(CEnt* ent, Vec2 basePos2D, Vec2 headPos2D)
 	auto updateHeight = filledRect.height * healthPerc;
 	filledRect.topLeftY += (filledRect.height - updateHeight);
 	filledRect.height = updateHeight;
-	render->DrawFilledRect(filledRect, menu->color.healthRect);
+	render->DrawFilledRect(filledRect, menu->color.healthBar);
 }
 
 static VOID RenderHealthBar(UINT hpStyle,CEnt* ent, Vec2 basePos2D,Vec2 headPos2D)

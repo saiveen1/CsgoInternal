@@ -120,7 +120,10 @@ BYTE* Utils::PatternScan(LPVOID pModule, LPCSTR pattern)
 			//直到找到数字返回16进制, 第二个参数被置为数字后的下一个字符, 此处为0x20
 			else
 				patternVec.push_back(strtoul(temp, &temp, 16));
-			temp++;
+			//非常坑爹的错误，Release版下字符串之间间隔可能只有一个字节
+			//导致两串特征码连在一起！
+			if (!*(temp++))
+				break;
 		}
 		return patternVec;
 	};

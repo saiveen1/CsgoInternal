@@ -89,6 +89,19 @@ Vec3 GameData::GetAimAnlges(Vec3 src)
 
 FLOAT GameData::GetDistFromCrosshair(Vec2 src)
 {
-	return Math::GetDistance2D(src, { windowWidth / 2.f,windowHeight / 2.f });
+	return Math::GetDistance2D(src, SCREENCENTER);
+}
+
+Vec2 GameData::GetRecoilCrosshair2D()
+{
+	auto aimPunch = g_localEnt->getAimPunchAngle();
+	Vec2 crosshairPos2D;
+	//FovY的值106.26 FovX的值90，也可以获取Fov这样在Sg和Aug开镜也可以使用，但为了单独两个枪不值当，就设置开镜不显示吧
+	crosshairPos2D.x = windowWidth / 2.f * (1.f - aimPunch.y / 53.f);
+	//角度x是pitch, 向上是负
+	crosshairPos2D.y = windowHeight / 2.f * (1.f + aimPunch.x / 45.f);
+	//-1是屏幕中心点和实际游戏中的Crosshair差了1个像素
+	crosshairPos2D -= 1.f;
+	return crosshairPos2D;
 }
 

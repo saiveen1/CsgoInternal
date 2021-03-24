@@ -6,7 +6,8 @@
 #include "hack.h"
 #include "dx9.h"
 
-
+#define WHITE D3DCOLOR_ARGB(255, 255, 255, 255)
+#define BLACK D3DCOLOR_ARGB(255, 0, 0, 0)
 class Render
 {
 

@@ -1,4 +1,6 @@
 #include "Aimbot.h"
+#include <atlstr.h>
+
 #include "hack.h"
 #include "Menu.h"
 #include "utils.h"
@@ -27,16 +29,21 @@ struct Settings {
 	}
 
 	VOID update() {
-		if (KEY_PRESSED(VK_UP))
-			aimRange += 2.f;
-		if (KEY_PRESSED(VK_DOWN))
-			aimRange -= 2.f;
-		if (KEY_PRESSED(VK_LEFT))
-			aimSpeed += 0.2f;
-		if (KEY_PRESSED(VK_RIGHT))
-			aimSpeed -= 0.2f;
-		if (aimSpeed < 1)
-			aimSpeed = 1;
+		menu->settings.showAimbotRange = FALSE;
+		if (KEY_PRESSING(VK_LMENU))
+		{
+			menu->settings.showAimbotRange = TRUE;
+			if (KEY_PRESSED(VK_UP))
+				aimRange += 2.f;
+			if (KEY_PRESSED(VK_DOWN))
+				aimRange -= 2.f;
+			if (KEY_PRESSED(VK_LEFT))
+				aimSpeed += 0.2f;
+			if (KEY_PRESSED(VK_RIGHT))
+				aimSpeed -= 0.2f;
+			if (aimSpeed < 1)
+				aimSpeed = 1;
+		}
 	}
 }aimbotSettings;
 
@@ -59,16 +66,20 @@ static VOID CalcBestAngles()
 	{
 		if(player->getTeam() == g_localEnt->getTeam())
 			continue;
+		//简单的是否可见判断
+		if(!player->getSpottedMask())
+			continue;
 		auto i = 0;
 		for (auto bonePoint : GameData::GetBonePoints(player))
 		{
-			//只瞄身子
-			if (i < 7)
+			//只瞄身子, 不加判断就是对所有骨骼点进行判定(骨骼图)
+			if (i++ < 7)
 			{
 				auto bonePos3D = GameData::GetBonePos3D(player, bonePoint);
 				auto bonePos2D = Vec2{ 0 };
 				if (W2S(bonePos3D, &bonePos2D))
 				{
+					//可以改成根据后坐力准星计算
 					auto curBoneDist = GameData::GetDistFromCrosshair(bonePos2D);
 					//超过自瞄范围
 					if(curBoneDist > aimbotSettings.aimRange)
@@ -81,7 +92,6 @@ static VOID CalcBestAngles()
 					}
 				}
 			}
-			i++;
 		}
 	}
 }
@@ -91,15 +101,19 @@ VOID Aimbot::run()
 	aimbotSettings.update();
 	if (menu->settings.noRecoil)
 		NoRecoil();
-	if(menu->settings.showAimbotRange)
-		render->DrawCircle({ windowWidth / 2.f,windowHeight / 2.f }, aimbotSettings.aimRange, (UINT)(aimbotSettings.aimRange / 3), 1, D3DCOLOR_ARGB(255, 255, 255, 255));
+	if (menu->settings.showAimbotRange)
+	{
+		CString szTemp;
+		szTemp.Format(L"%.1f", aimbotSettings.aimSpeed);
+		render->DrawTextW(szTemp, SCREENCENTER, WHITE);
+		render->DrawCircle(SCREENCENTER, aimbotSettings.aimRange, (UINT)(aimbotSettings.aimRange / 3), 1, WHITE);
+	}
 	if (menu->settings.aimbot)
 	{
 		menu->settings.noRecoil = FALSE;
 		CalcBestAngles();
 		if (KEY_PRESSING(menu->buttons.startAim))
 		{
-			
 			//不能用&&判断
 			if (bestAngle.bestAimEnt) 
 			{
