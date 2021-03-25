@@ -10,7 +10,8 @@ Render::Render()
 Render::~Render()
 {
 	FontF->Release();
-	LineL->Release();
+	if(LineL)
+		LineL->Release();
 }
 
 

@@ -40,9 +40,12 @@ DWORD WINAPI HackThread(HMODULE hModule)
 			hack->Update();
 		}
 
-		Sleep(1000);
 		Hook::Patch(d3d9Device[42], EndSceneBytes, 7);
-
+		//在没进入游戏的时候结束DLL
+		//恢复EndScene和Free之间如果不间隔时间, 游戏会直接崩溃
+		//因为即便恢复了但可能上一次的调用还没有走完
+		//Free 后就没有当前DLL导致读取异常
+		Sleep(2000);
 		Utils::DetachConsole();
 		::FreeLibraryAndExitThread(hModule, 0);
 	}
@@ -123,7 +126,7 @@ VOID Hack::Dump()
 
 VOID Hack::Run()
 {
-	//在进入游戏前开启了辅助
+	//处于大厅界面, 获取不到local
 	if(!clientData.pLocal)
 		g_localEnt = clientData.pLocal = **(CEnt***)(Utils::PatternScan(clientDLL, "8B 35 ?? ?? ?? ?? 57 85 F6 74 56") + 2);
 	getPlayers();
