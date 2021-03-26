@@ -7,7 +7,9 @@ With basic ESP and aimbot thing, use patternScan to update the offset.
 
 Press ALT to show the aimbot settings and use ↑↓←→ to set.
 
-It has 3 healthbar sytle.
+It has 3 healthbar sytle, leftClick start aimbot and shift to aim at the head.
+
+All the button settins are in menu.h
 
 No fancy code tricks, cause I don't know how to... :( . So some of the codes sucks(In GameData.h playerStruct).
 
@@ -24,11 +26,13 @@ Hope can help you.
 
 按住ALT显示自瞄的设置，并用↑↓←→改变设置。
 
-有三种显示血量条的方式。
+有三种显示血量条的方式, 左键使用自瞄shift瞄准头部。
 
-没有比较炫的代码技巧，因为我不会。。。 所以有些代码比较shi（在GameData.h里的人物结构部分）。
+所有的按键设置都在Menu.H
 
-将C++标准设为preview，使用VS2019完美编译。
+有些代码比较shi（在GameData.h里的人物结构部分）。
+
+将C++标准设为preview，VS2019成功编译。
 
 希望能帮助到你
 
