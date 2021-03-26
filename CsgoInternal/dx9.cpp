@@ -26,8 +26,17 @@ HWND GetProcessWindow()
 	windowWidth = size.right - size.left;
 	windowHeight = size.bottom - size.top;
 
-	windowHeight -= 29;
-	windowWidth -= 5;
+	//Don't know how to check is full screen.
+	//Just simple use height 1080 as a boundary. 
+	//If the game is in window mode please make sure the resolution smaller than 1080P
+	//And while the game change size you need to re-inject the dll.
+	//Or add it in WorldToScreen function to update it every time. :)
+	//The resolution thing in CheatEngine search for your current windowWidth or height, simple get the static offset. Well I won't do it....lazy
+	if (windowHeight < 1080)
+	{
+		windowHeight -= 30;
+		windowWidth -= 5;
+	}
 
 	return window;
 }

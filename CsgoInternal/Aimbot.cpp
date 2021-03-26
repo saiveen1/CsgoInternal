@@ -75,6 +75,8 @@ static VOID CalcBestAngles()
 			//只瞄身子, 不加判断就是对所有骨骼点进行判定(骨骼图)
 			if (i++ < 7)
 			{
+				if (KEY_PRESSING(menu->buttons.aimAtHead))
+					bonePoint = 8;
 				auto bonePos3D = GameData::GetBonePos3D(player, bonePoint);
 				auto bonePos2D = Vec2{ 0 };
 				if (W2S(bonePos3D, &bonePos2D))

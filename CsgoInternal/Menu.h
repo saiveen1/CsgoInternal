@@ -45,6 +45,7 @@ public:
 		UINT noRecoil = VK_F7;
 		UINT aimbot = VK_F8;
 		UINT startAim = VK_LBUTTON;
+		UINT aimAtHead = VK_LSHIFT;
 		UINT recoilCrosshair = 0x30; //ctrl + 0
 		UINT exit = VK_END;
 	}buttons;

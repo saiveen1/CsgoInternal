@@ -21,10 +21,14 @@ WCHAR szBufffer[256]{ 0 };
 CString str;
 struct DbgSets {
 	//显示所有骨骼点
+	//Show all bone points
 	BOOL bAllBones = FALSE; 
 	//显示主要骨骼点
+	//Show main bone(hitBox) points
 	BOOL bMainBonePoints = FALSE; 
-	//上下左右82移动一条线 9重置为人物原点 在只有一个实体的时候使用！！！！自瞄调节按键也是上下左右所以关自瞄
+	//上下左右82移动一条线 9重置为人物原点 在只有一个实体的时候使用！！！！
+	//press arrow keys and NUMPAD8_2 to move the line, NUMPAD9 to reset the line to ent
+	//Use when there is only one ent
 	BOOL bMovingLine = FALSE; 
 } dbgSettins;
 D3DCOLOR textColor = D3DCOLOR_ARGB(255, 255, 255, 255);
@@ -229,7 +233,7 @@ static VOID RenderSkeleton(CEnt* ent)
 			}
 #endif // _DEBUG
 
-			//超过一定距离 手部骨骼不会实时刷新, 所以直接过掉
+			//手部骨骼
 			if(j == 13 || j == 14)
 				continue;
 			render->DrawLine(fBonePos2D, cBonePos2D, 1, skeletonColor);
@@ -265,7 +269,7 @@ static VOID RenderPlayerEsp(CEnt* ent)
 		Vec3 headPos3D = { 0 };
 		Vec2 headPos2D = { 0 };
 		headPos3D = GameData::GetHeadPos(ent);
-		//这里可以加判断头再屏幕里才显示
+
 		W2S(headPos3D, &headPos2D);
 		if (menu->settings.visual.snaplines)
 			DrawSnapLine(basePos2D);
