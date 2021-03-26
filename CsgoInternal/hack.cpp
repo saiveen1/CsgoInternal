@@ -34,7 +34,7 @@ DWORD WINAPI HackThread(HMODULE hModule)
 #ifdef _DEBUG
 		Utils::AttachConsole();
 #endif // _DEBUG窗口需要在获取Device后因为之间有个遍历窗口的操作
-		Utils::ConsolePrint("EntityList: %x\nLocalPlayer: %x\nViewAngles: %x\nVPMatrix: %x\n", (UINT)clientData.entityList, (UINT)clientData.pLocal, (UINT)clientData.viewAngles, (UINT)clientData.vpMatrix);
+		Utils::ConsolePrint("EntityList: %x\nLocalPlayer: %x\nViewAngles: %x\nVPMatrix: %x\n", (UINT)clientData.entityList, (UINT)g_localEnt, (UINT)clientData.viewAngles, (UINT)clientData.vpMatrix);
 		while (!KEY_PRESSED(menu->buttons.exit))
 		{
 			hack->Update();
@@ -75,6 +75,7 @@ VOID APIENTRY HookEndScene(LPDIRECT3DDEVICE9 oldPDevice)
 VOID Hack::getPlayers()
 {
 	auto validPlayers = std::vector<CEnt*>{};
+
 	for (auto i = 2ul; i < 32; i++)
 	{
 		CEnt* ent = entList->m_EntPtrArrary[i].pEnt;
@@ -89,7 +90,6 @@ Hack::Hack()
 	clientDLL = GetModuleHandle(L"client.dll");
 	engineDLL = GetModuleHandle(L"engine.dll");
 	Dump();
-	g_localEnt = clientData.pLocal;
 	entList = clientData.entityList;
 }
 
@@ -103,11 +103,11 @@ VOID Hack::Dump()
 	auto viewAnglesOffset = *(UINT*)(Utils::PatternScan(engineDLL, "F3 0F 11 80 ?? ?? ?? ?? D9 46 08 D9 05") + 4) - 4;
 	clientData.viewAngles = (Vec3*)(*clientData.clientState + (UINT)viewAnglesOffset);
 
-	clientData.pLocal = **(CEnt***)(Utils::PatternScan(clientDLL, "8B 35 ?? ?? ?? ?? 57 85 F6 74 56") + 2);
-
 	auto clientInfo = *(UINT*)(Utils::PatternScan(clientDLL, "B9 ?? ?? ?? ?? 50 6A 00 6A 03 83 EC 08") + 1);
 	auto matrixOffset = *(UINT*)(Utils::PatternScan(clientDLL, "8D 45 80 8D 8F ?? ?? ?? ?? 50 E8") + 5);
 	clientData.vpMatrix = (FLOAT*)((UINT)clientInfo + (UINT)matrixOffset);
+
+	g_localEnt = *(CEnt**)(*(UINT*)((Utils::PatternScan(clientDLL, "42 56 8D 34 85 ?? ?? ?? ??") + 5)) + 4);
 
 	playerData.dormant = *(UINT*)(Utils::PatternScan(clientDLL, "88 9E ?? ?? ?? ?? E8 ?? ?? ?? ?? 53") + 2);
 	playerData.health = *(UINT*)(Utils::PatternScan(clientDLL, "83 B9 ?? ?? ?? ?? 00 7F 2D 8B 01") + 2);
@@ -126,14 +126,17 @@ VOID Hack::Dump()
 
 VOID Hack::Run()
 {
-	//处于大厅界面, 获取不到local
-	if(!clientData.pLocal)
-		g_localEnt = clientData.pLocal = **(CEnt***)(Utils::PatternScan(clientDLL, "8B 35 ?? ?? ?? ?? 57 85 F6 74 56") + 2);
-	getPlayers();
-	menu->RenderMenu();
-	Misc::run();
-	ESP::run();
-	Aimbot::run();
+	if (!g_localEnt)
+		g_localEnt = *(CEnt**)(*(UINT*)((Utils::PatternScan(clientDLL, "42 56 8D 34 85 ?? ?? ?? ??") + 5)) + 4);
+	else
+	{
+		getPlayers();
+		menu->RenderMenu();
+		Misc::run();
+		ESP::run();
+		Aimbot::run();
+	}
+
 }
 
 VOID Hack::Update()

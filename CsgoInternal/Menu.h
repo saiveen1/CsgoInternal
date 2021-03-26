@@ -40,7 +40,7 @@ public:
 		UINT showTeamates = VK_F1;
 		UINT snaplines = VK_F2;
 		UINT rect = VK_F3;
-		UINT hpEsp = VK_F4;
+		UINT hpEsp = 0x39;
 		UINT skeletonEsp = VK_F6;
 		UINT noRecoil = VK_F7;
 		UINT aimbot = VK_F8;

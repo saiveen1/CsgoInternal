@@ -219,43 +219,42 @@ static VOID RenderSkeleton(CEnt* ent)
 
 
 			Vec2 fBonePos2D, cBonePos2D;
-			W2S(fatherBonePos3D, &fBonePos2D);
-			W2S(cBonePos3D, &cBonePos2D);
-
-
-#ifdef _DEBUG
-			if (dbgSettins.bMainBonePoints)//显示主要的判定骨骼点
+			if (W2S(fatherBonePos3D, &fBonePos2D) && W2S(cBonePos3D, &cBonePos2D))
 			{
-				str.Format(L"%d", bonePoints.at(j));
-				memset(szBufffer, 0, 256 * 2);
-				wsprintf(szBufffer, L"%s", str.GetBuffer(str.GetLength()));
-				render->DrawText(szBufffer, fBonePos2D, textColor);
-			}
+#ifdef _DEBUG
+				if (dbgSettins.bMainBonePoints)//显示主要的判定骨骼点
+				{
+					str.Format(L"%d", bonePoints.at(j));
+					memset(szBufffer, 0, 256 * 2);
+					wsprintf(szBufffer, L"%s", str.GetBuffer(str.GetLength()));
+					render->DrawText(szBufffer, fBonePos2D, textColor);
+				}
 #endif // _DEBUG
 
-			//手部骨骼
-			if(j == 13 || j == 14)
-				continue;
-			render->DrawLine(fBonePos2D, cBonePos2D, 1, skeletonColor);
+				//手部骨骼
+				if (j == 13 || j == 14)
+					continue;
+				render->DrawLine(fBonePos2D, cBonePos2D, 1, skeletonColor);
 
-			//脖子和大腿连接处
-			if (j == 1 || j == 3)
-			{
-				DWORD childBones[2];
-
-				Vec3 connects3D[2];
-				Vec2 connects2D[2];
-				childBones[0] = j == 1 ? bonePoints[15] : bonePoints[7];
-				childBones[1] = j == 1 ? bonePoints[17] : bonePoints[8];
-				for (auto k = 0; k < 2; k++)
+				//脖子和大腿连接处
+				if (j == 1 || j == 3)
 				{
-					connects3D[k] = GameData::GetBonePos3D(ent, childBones[k]);
-					W2S(connects3D[k], &connects2D[k]);
-					render->DrawLine(fBonePos2D, connects2D[k], 1, skeletonColor);
+					DWORD childBones[2];
+
+					Vec3 connects3D[2];
+					Vec2 connects2D[2];
+					childBones[0] = j == 1 ? bonePoints[15] : bonePoints[7];
+					childBones[1] = j == 1 ? bonePoints[17] : bonePoints[8];
+					for (auto k = 0; k < 2; k++)
+					{
+						connects3D[k] = GameData::GetBonePos3D(ent, childBones[k]);
+						if (W2S(connects3D[k], &connects2D[k]))
+							render->DrawLine(fBonePos2D, connects2D[k], 1, skeletonColor);
+					}
+					//头部的圆圈
+					if (j == 1)
+						render->DrawCircle(cBonePos2D, Math::GetDistance2D(fBonePos2D, cBonePos2D), 20, 1, skeletonColor);
 				}
-				//头部的圆圈
-				if (j == 1)
-					render->DrawCircle(cBonePos2D, Math::GetDistance2D(fBonePos2D, cBonePos2D), 20, 1, skeletonColor);
 			}
 		}
 	}
