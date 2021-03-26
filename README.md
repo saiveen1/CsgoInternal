@@ -1,5 +1,5 @@
 # CsgoInternal
-Csgo internal hack without SDK(Just the entitylist struct, but it doesn't matter).
+Csgo internal hack without source SDK and any other things.(Just the entitylist struct, but it doesn't matter, you can just delete it).
 
 For beginners to learn the game hacking.
 
@@ -10,6 +10,8 @@ Press ALT to show the aimbot settings and use ↑↓←→ to set.
 It has 3 healthbar sytle.
 
 No fancy code tricks, cause I don't know how to... :( . So some of the codes sucks(In GameData.h playerStruct).
+
+Set the C++ language standard to preview. Compile in VS2019 perfectly. 
 
 Hope can help you.
 
@@ -24,7 +26,9 @@ Hope can help you.
 
 有三种显示血量条的方式。
 
-没有比较炫的代码技巧，因为我不会。。。 所以有些代码比较shi（在GameData.h里的人物结构部分）
+没有比较炫的代码技巧，因为我不会。。。 所以有些代码比较shi（在GameData.h里的人物结构部分）。
+
+将C++标准设为preview，使用VS2019完美编译。
 
 希望能帮助到你
 
