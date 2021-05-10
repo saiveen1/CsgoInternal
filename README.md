@@ -17,6 +17,9 @@ Set the C++ language standard to preview. Compile in VS2019 perfectly.
 
 Hope can help you.
 
+## Acknowledgments
+[CSGO Direct3D9 EndScene Hook & D3D9 ESP Tutorial Series](https://guidedhacking.com/threads/csgo-direct3d9-endscene-hook-d3d9-esp-tutorial-series.14570/)
+
 # Csgo内部
 没有使用SDK(只使用了EntityList结构但基本没什么影响, 不使用也可以)
 
@@ -37,3 +40,6 @@ Hope can help you.
 希望能帮助到你
 
 ![微信图片_20210325164459](https://user-images.githubusercontent.com/34472475/112574161-fdfb6580-8daa-11eb-8fd2-9dbf59f20563.png)
+
+## 感谢
+[CSGO Direct3D9 EndScene Hook & D3D9 ESP Tutorial Series](https://guidedhacking.com/threads/csgo-direct3d9-endscene-hook-d3d9-esp-tutorial-series.14570/)
