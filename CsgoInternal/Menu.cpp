@@ -4,7 +4,7 @@
 #include "render.h"
 
 #include <atlstr.h>
-Vec2 menuPos{ 100,300 };
+Vec2 menuPos{ 300,300 };
 
 VOID Menu::RenderMenu()
 {
