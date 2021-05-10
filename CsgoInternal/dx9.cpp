@@ -26,7 +26,7 @@ HWND GetProcessWindow()
 	windowWidth = size.right - size.left;
 	windowHeight = size.bottom - size.top;
 
-	//Don't know how to check is full screen.
+	//No idea how to check is full screen.
 	//Just simple use height 1080 as a boundary. 
 	//If the game is in window mode please make sure the resolution smaller than 1080P
 	//And while the game change size you need to re-inject the dll.

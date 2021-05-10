@@ -54,7 +54,7 @@ DWORD WINAPI HackThread(HMODULE hModule)
 		Utils::ConsolePrint("%s\n", e.what());
 		MessageBox(0, Utils::C2W(e.what()), L"Error", 0);
 		Utils::DetachConsole();
-		FreeLibraryAndExitThread(hModule, 1);
+		::FreeLibraryAndExitThread(hModule, 1);
 	}
 }
 
@@ -97,7 +97,14 @@ VOID Hack::Dump()
 {
 
 	clientData.clientState = *(UINT**)(Utils::PatternScan(engineDLL, "A1 ?? ?? ?? ?? 8D 48 08 E9") + 1);
-	clientData.entityList = *(CBaseEntityList**)(Utils::PatternScan(clientDLL, "56 8B 89 ?? ?? ?? ?? 85 C9 74 1B") + 3);
+	clientData.entityList = *(CBaseEntityList**)(Utils::PatternScan(clientDLL, "8B 0D ?? ?? ?? ?? F3 0F 11 45 F4 85 C0") + 2);
+	if(!clientData.entityList)
+		clientData.entityList= *(CBaseEntityList**)(Utils::PatternScan(clientDLL, "8B 0D ?? ?? ?? ?? 85 C9 74 07 8B 01 FF 50 1C") + 2);
+	if (!clientData.entityList)
+	{
+		throw "Entity list pattern not found, please remind me to update.";
+		return;
+	}
 
 	//特征码是yaw的找错了减4才是pitch
 	auto viewAnglesOffset = *(UINT*)(Utils::PatternScan(engineDLL, "F3 0F 11 80 ?? ?? ?? ?? D9 46 08 D9 05") + 4) - 4;
@@ -106,8 +113,7 @@ VOID Hack::Dump()
 	auto clientInfo = *(UINT*)(Utils::PatternScan(clientDLL, "B9 ?? ?? ?? ?? 50 6A 00 6A 03 83 EC 08") + 1);
 	auto matrixOffset = *(UINT*)(Utils::PatternScan(clientDLL, "8D 45 80 8D 8F ?? ?? ?? ?? 50 E8") + 5);
 	clientData.vpMatrix = (FLOAT*)((UINT)clientInfo + (UINT)matrixOffset);
-
-	g_localEnt = *(CEnt**)(*(UINT*)((Utils::PatternScan(clientDLL, "42 56 8D 34 85 ?? ?? ?? ??") + 5)) + 4);
+	clientData.pLocalPtr = (CEnt**)(*(UINT*)((Utils::PatternScan(clientDLL, "42 56 8D 34 85 ?? ?? ?? ??") + 5)) + 4);
 
 	playerData.dormant = *(UINT*)(Utils::PatternScan(clientDLL, "88 9E ?? ?? ?? ?? E8 ?? ?? ?? ?? 53") + 2);
 	playerData.health = *(UINT*)(Utils::PatternScan(clientDLL, "83 B9 ?? ?? ?? ?? 00 7F 2D 8B 01") + 2);
@@ -126,12 +132,11 @@ VOID Hack::Dump()
 
 VOID Hack::Run()
 {
-	if (!g_localEnt)
-		g_localEnt = *(CEnt**)(*(UINT*)((Utils::PatternScan(clientDLL, "42 56 8D 34 85 ?? ?? ?? ??") + 5)) + 4);
-	else
+	menu->RenderMenu();
+	
+	if(g_localEnt = *clientData.pLocalPtr)
 	{
 		getPlayers();
-		menu->RenderMenu();
 		Misc::run();
 		ESP::run();
 		Aimbot::run();

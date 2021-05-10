@@ -159,7 +159,7 @@ static VOID LeftHealthBar(CEnt* ent, Vec2 basePos2D, Vec2 headPos2D)
 	auto rectWidth = rectHeight / 2.f;
 	auto healthBarWidth = 3.f;
 	auto topLX = headPos2D.x - rectWidth / 2.f - healthBarWidth;
-	auto topLY = headPos2D.y + 2.f; //不减的话血条看起来会多出一点
+	auto topLY = headPos2D.y + 1.f; //初始状态会多出一像素
 	Rect filledRect = { topLX,topLY,healthBarWidth,rectHeight };
 	auto healthPerc = ent->getHealth() / 100.f;
 	auto updateHeight = filledRect.height * healthPerc;
@@ -237,6 +237,7 @@ static VOID RenderSkeleton(CEnt* ent)
 				render->DrawLine(fBonePos2D, cBonePos2D, 1, skeletonColor);
 
 				//脖子和大腿连接处
+				//Neck and waist
 				if (j == 1 || j == 3)
 				{
 					DWORD childBones[2];

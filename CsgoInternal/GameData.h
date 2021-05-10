@@ -56,6 +56,7 @@ struct ClientData {
 	FLOAT* vpMatrix;
 	UINT* clientState;
 	Vec3* viewAngles;
+	CEnt** pLocalPtr;
 };
 extern ClientData clientData;
 

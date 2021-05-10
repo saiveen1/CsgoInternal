@@ -67,6 +67,7 @@ static VOID CalcBestAngles()
 		if(player->getTeam() == g_localEnt->getTeam())
 			continue;
 		//简单的是否可见判断
+		//A simple visible check.
 		if(!player->getSpottedMask())
 			continue;
 		auto i = 0;
@@ -83,7 +84,7 @@ static VOID CalcBestAngles()
 				{
 					//可以改成根据后坐力准星计算
 					auto curBoneDist = GameData::GetDistFromCrosshair(bonePos2D);
-					//超过自瞄范围
+
 					if(curBoneDist > aimbotSettings.aimRange)
 						continue;
 					if (curBoneDist < bestAngle.closestBoneDist)

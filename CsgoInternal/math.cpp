@@ -21,7 +21,7 @@ BOOL Math::WorldToScreen(Vec3 pos, Vec2* screen) {
 	screen->x = (windowWidth / 2 * NDC.x) + (NDC.x + windowWidth / 2);
 	screen->y = -(windowHeight / 2 * NDC.y) + (NDC.y + windowHeight / 2);
 
-	//这里可以调整超出屏幕多少就不进行绘制.
+	//需改进...
 	if (screen->x > windowWidth * 6.f || screen->y > windowHeight * 6.f || screen->x < 0 || screen->y < 0)
 		return FALSE;
 	return TRUE;
